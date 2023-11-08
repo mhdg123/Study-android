@@ -1,0 +1,275 @@
+안드로이드 스튜디오 -구글 검색 (다운)
+처음설치할 때 34,30,29 (sdk manager에서 선택)
+
+34로 바꾸라는 에러가 뜨면 build.gradle.kts(module:app)로 들어가서 compileSdk 를 34 targetSdk를 34로 바꾸면됨 
+그리고 위에 syns now 눌러서 동기화 
+
+
+new project만들 때 패키지네임에 example들어가면안됨
+
+안드로이드 app생성 단계 (앱 만들 때 순서)
+
+1. 안드로이드 project 생성
+
+2. 화면을 디자인 및 편집 (.xml이 함)
+
+3. kotlin 코드 작성 밑 수정(.kt)
+
+4. 실행 및 확인
+
+5. 완료 //만약 정상작동 하지 않으면 어디서 잘못됐는지 찾아서 수정 
+----------------------------------------------------------------------------------------------------------
+화면 위에 올려져 있는 각종 기능 -> 위젯이라고 함 
+하지만 위젯은 핸드폰위에 바로 올릴 수 없음 => 레이아웃 위에 위젯이 올라감 
+사용자가 보여주려는 것들(이미지 등등)을 위젯으로 만들어 레이아웃에 올림 
+
+화면 -> 위에 레이아웃 -> 위젯이 올라감 (위젯의 배치를 레이아웃이 하고 화면은 사용자가 보는 것)
+
+xml을 열려면 res ->layout 
+코드를 작성하려면 위에 코드버튼을 누르면 됨
+
+androidx.constraintlayout.widget.ConstraintLayout
+xml코드를 열면 위에 코드가 보이는데 위젯 레이아웃이보이고 
+androidx는 확장 => android에 몇가지 추가되는기능들이 들어있는 것(최신)
+android =>기본형
+----------------------------------------------------------------------------------------------------------
+안드로이드는 거의 레이아웃이 정해져있음(종류)
+1. LinearLayout(거의 80%사용) => 위젯의 배치를 수직 혹은 수평으로 배치함 
+
+2. RelativeLayout
+
+3. FrameLayout
+
+4. GridLayout
+
+----------------------------------------------------------------------------------------------------------
+코드를 치고 디자인버튼을 눌러 바로 확인 가능
+<LinearLayout>
+
+명령어들 선언
+
+</LinearLayout> -> 더블태그(태그가 여는 것 닫는 것)
+
+<test      />   -> 싱글태그
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+이 코드는 xml을 구동시키기 위한 코드 여기서 색이 바뀐다면 지정해준 위젯이나 레이아웃이 그 코드를 실행하지 않는다는 것
+(이코드가 필요없다)
+
+tools:context=".MainActivity
+이 명령어는 LinearLayout이 사용하지 않음
+
+android:orientation => 이 명령어는 수직 or 수평 선택하는 것 
+만약 자동완성 코드가 사라진다면 crtl+spacebar
+
+ID: ______
+PW:______
+
+이건 수직도 쓰이고 수평도 쓰임 
+
+----------------------------------------------------------------------------------------------------------
+match : 화면을 다 채움
+wrap: 기본 크기로 
+
+android:text ="좋아하는 동물"로 지정해 놓으면 이걸 불러올 수 있는
+아이디 값을 따로 설정해야 함
+android:id="@+id/txtView1" => 좋아하는 동물을 불러올 수 있는 아이디값 
+아이디는 사용하든 사용하지 않든 꼭 적어줘야 함 
+아이디는 코틀린에 저장됨 =>나중에 코틀린에서 사용해야함
+
+안드로이드 id는 R.java에 안드로이드가 자동으로 저장 
+
+안드로이드에서 아이디값은 중복안됨
+----------------------------------------------------------------------------------------------------------
+xml은 <>에 좌우 공백을 허용하지 않음 
+
+dp => 1px(화면에 점하나 나타냄) dp==px 같은것 
+
+px=>autosize가 되서 즉 저절로 화면비율에 따라 달라지기 때문에 안드로이드에서 dp사용
+
+**************************************************************************************************
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="좋아하는 동물"
+        android:id="@+id/txtView1"
+        android:textSize="30dp"/>
+
+   <RadioButton
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/dog"
+       android:text="강아지"
+       android:textSize="25dp"/>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cat"
+        android:text="고양이"
+        android:textSize="25dp"/>
+
+
+**************************************************************************************************
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp" //너무 좌우상에 딱 붙어서 여백 값 줌 
+//레이아웃에 준거지 각각의 위젯에 준건 아님 //전체레이아웃에 상하좌우에 여백을 줌
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름을 입력하세요"
+        android:id="@+id/txtName"
+        android:textSize="30dp"/>
+
+    <EditText //텍스트 밑에 입력하는 칸 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이름 입력" //힌트를 주면 커서가 올라가는 동시에 사라짐 
+        android:id="@+id/edtName"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="확    인"
+        android:id="@+id/btnName"/>
+ 
+**************************************************************************************************
+위젯의 속성중 보일 것인 아니면 숨길 것인지를 결정
+visibility => visible(보임), invisible(안보임), gone //gone 과 invisible 같지만 약간의 차이
+invisible은 자기자리를 지키면서 안보임 그자리는 공백으로 처리된 것처럼 보임
+gone은 숨김 그 자리에 밑에 있는 위젯이 그 자리를 차지하는 것처럼 보임 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn1"
+        android:text="버튼 1"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn2"
+        android:visibility="invisible"
+        android:text="버튼 2"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn3"
+        android:text="버튼 3"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn4"
+        android:visibility="gone"
+        android:text="버튼 4"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn5"
+        android:text="버튼 5"/>
+ 
+**************************************************************************************************
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn2"
+        android:clickable="false" //버튼은 정상적으로 보이지만 클릭이 안됨
+        android:text="버튼 2"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn3"
+        android:enabled="false" //버튼이 색이 변해 활성화되어 있지 않은 것처럼 보임 
+//당연히 클릭도 안됨 //무언갈 체크 했을 때 이버튼이 활성화되게끔 만들 때 많이 사용 
+        android:text="버튼 3"/>
+
+**************************************************************************************************
+안드로이드에서 이미지는 한곳밖에 저장못함
+res => drawable =>마우스오른쪽버튼 누르고 Paste
+
+CheckBox => 다중선택
+RadioButtom => 단일선택 => 하려면 radio그룹(radio버튼의 부모)을 만들어줘야함 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text1"
+        android:text="선택하시겠습니까?"
+        android:textSize="20dp"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkBox1"
+        android:text="시작"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text2"
+        android:text="좋아하는 동물을 선택"
+        android:textSize="20sp"
+        android:visibility="invisible"/> //시작할 때는 저 위에 텍스트랑 체크박스만 보여야하므로
+    
+    <RadioGroup // 쌍태그
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radGroup1"
+        android:visibility="invisible">  //RadioGroup에 invisible을 해주면 RadioButton은
+어차피 그룹안에 있으므로 안보임
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bird"
+            android:text="새"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cat"
+            android:text="고양이"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dog"
+            android:text="강아지"/>
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnClick"
+        android:text="완   료"
+        android:visibility="invisible"/>
+    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image"
+        android:visibility="invisible"/>
+
+**************************************************************************************************
+xml => ui( user interface) => 사용자 화면을 만듬 
+
+Kotlin 코드 작성 
+
+만약 버튼을 화면에 띄우면 그 버튼에 대한 것을 Kotlin에서 작성
+
+
+
+
+
+
+
