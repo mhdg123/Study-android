@@ -1,0 +1,170 @@
+안드로이드 
+1. 이미지는 무조건 drawable에만 들어감
+2.미디어(wav,mp3,mov) =>raw에 들어감 
+res에서 new =>resource directory => raw 선택 후 폴더 만듬
+파일을 raw에 붙여넣기 
+
+미디어 재생  = >음원을 관리하고 재생하는 클래스  =>SoundPool 
+뷰 바인딩 =>findviewByid()을 사용하지 않고 쉽게 레이아웃에 정의한 객체를 사용할 수 있다
+
+bulid.gradle.kts 에서 android괄호 안에   buildFeatures {
+        viewBinding = true
+    }을 넣어줘야 viewbinding사용가능함 => 동기화를 해줘야 이거에 맞는 라이브러리를 
+다운받아서 사용가능함 
+
+xml에서 위젯사용한것을 코틀린과 연동하기 위해서 findviewByid()를 썼는데 이제는 쓰지
+않겠다 결국 xml을 건드리지 않고 다이렉트로 가져온다 
+
+class MainActivity : AppCompatActivity() {
+    private val binding by lazy { //binding은 사용자가 불러오지 않는 이상은 초기화를 늦게 하겠다
+        ActivityMainBinding.inflate(layoutInflater) // 현재화면에서 binding하겠다 
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+//원래 setContentView(R.layout.activity_main) 이었는데 xml을 쓰지 않을 것이므로 binding으로 바꿈
+    }
+} //뷰바인딩을 사용하기 위한 환경 설정 // 변하지 않음 
+
+  //화면을 가로 모드로 고정(첫번째방법)
+        //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+Activity ==> 1개의 화면을 말한다 (Activity + xml)
+manifests에 activity가 있으면 화면이 추가되었다는 뜻
+
+앱프로그램을 허용하면 다 가져갈 수 있음 // 안드로이드의 보안이 약함 // 안드로이드 보안을 강화하긴
+했지만 안드로이드는 업데이트가 잦은 이유가 오픈소스여서 그렇다(아이폰은 막혀있음) 아이폰은  오픈
+소스로 하면 그때부터 타깃이됨 
+
+ //두번째방법 - 왼쪽 상단 manifests를 더블클릭/이곳은 안드로이드 앱이 실행되면 여기서 허가와 권한을 넣어주는곳
+ //그래서 명령어를 사용해서 여기서도 설정가능함
+   <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape">
+여기서 landscape으로 주면 가로모드로 됨 
+activity마다 orientation을 따로 줄 수 있음
+
+코드로 안적고 디자인에서 작업
+
+정중앙으로 올려면 all attribute에서 gravity를 깃발모양선택해서 center로 주면됨 
+
+다 만들고 나서 정렬
+ctrl키로 다 선택 후 마우스오른쪽버튼 누르고 chains에서 create horizontal chain을 눌러주면 간격맞춰서
+변함 
+
+안드로이드에서 소리를 재생 하는 방법 
+첫번째. SoundPool이라는 명령어를 이용할 것  - 반복되어서 연속적으로 소리를 재생하는 경우 
+ex) 악기연주, 실로폰 등 
+사용하는 방법은 Builder().build() => SoundPool 객체 생성 => load()
+두번쨰. MediaPlayer 이용 -반복되지 않은 음악을 재생할 때 좋음 
+
+raw에 있는 미디어 (소리) 를 재생하는 방법
+val mediaPlayer(변수) = MediaPlayer.create(this, R.raw.do1) => this(현재화면)에 있는 것에서 R.raw.do1를 만들면
+MediaPlayer로 재생하겠다 즉 저 파일을 변수 mediaPlayer에 주고 클릭 시 소리를 내게 하는 것 
+
+미디어 플레이어로 재생한 후에는 release() 메서드로 해제 해주어야 한다 이걸 안해주면 앱을 
+실행안했는데도 메모리를 계속 차지하고 있음 그래서 나중엔 핸드폰이 계속 느려짐 
+
+button.setOnclickListener{ mediaPlayer.start() }
+
+mediaPlayer.release()
+----------------------------------------------------------------------------------------------------------------
+ViewFlipper => 여러개의 위젯을 배치하고 필요하다면 화면의 왼쪽 혹은 오른쪽으로 밀어서 위젯을 
+보여주는 방식이다 
+이전 다음 버튼을 누르면 다음화면을 보여주는 것 
+
+일반적인 형태 
+<리니어레이아웃>
+      <리니어레이아웃>
+	전환할버튼
+      </리니어레이아웃>
+      <뷰플리퍼>
+	화면에 보여줄 위젯 혹은 이미지 
+      </뷰플리퍼>
+</리니어레이아웃>
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPrev"
+            android:layout_weight="1"   // 1로 주면 그 화면에서 1:1비율로 잡힘 
+            android:text="이전"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnNext"
+            android:layout_weight="1"
+            android:text="다음"/>
+
+    </LinearLayout>
+    <ViewFlipper
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewFlipper1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#0000FF">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF00FF">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00F0FF">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F0FFFF">
+        </LinearLayout>
+    </ViewFlipper>
+
+</LinearLayout>
+
+위 xml에 해당하는 kotlin
+
+package com.korea.android1029_1
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.ViewFlipper
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var btnPrev : Button
+        var btnNext : Button
+        var vFlipper : ViewFlipper
+
+        btnPrev = findViewById(R.id.btnPrev)
+        btnNext = findViewById(R.id.btnNext)
+        vFlipper = findViewById(R.id.viewFlipper1)
+
+        btnPrev.setOnClickListener {
+            vFlipper.showPrevious() // 클릭 시 이전화면보여줌
+        }
+
+        btnNext.setOnClickListener {
+            vFlipper.showNext() // 클릭 시 다음화면보여줌
+        }
+    }
+}
