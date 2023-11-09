@@ -1,0 +1,311 @@
+drawble 에는 이미지만 들어가고 layout 폴더에는 xml들어감
+xml에는 ui(user interface)=화면 코드를 작성
+
+Kotlin 
+	java와 100% 호환 기능을 가지고 있다
+	1. fun => 함수를 선언하는 키워드
+	fun = function // fun test() => test라는 함수를 선언
+
+다른 언어에서 함수를 선언할 때는 
+	int test(){}/ void test(){} ... 
+	명령어 뒤에 ;을 붙여야 함
+
+java와 다르게 kotlin은 마지막 행을 구분하는 의미의 ;  붙이지 않는다
+붙여도 에러를 발생하진 않지만 붙이지 않는다 
+
+2. 변수 선언 키워드 
+	var / val(value의 약자)
+var test => test라는 변수를 선언 
+val test => test라는 변수를 선언(변수에 대입된 값의 변경 불가)
+
+var test =10
+test =20
+
+하지만 val test=10 은 다시 test=20하지 못한다(값 변경 불가)
+
+일반적인 언어에선 변수 앞에 자료형타입을 설정하는데 코틀린에선
+
+var 변수 이름 : 데이터 타입 
+	var test : Int = 20 이렇게 사용함 
+	var test1 : float = 10.2f
+
+     정수형 변수 test에 20이 초기화됨 
+
+Kotlin에서 사용되는 데이터형
+정수: Byte, Short, Int, Long
+실수: Float, Double
+문자: Char, String 
+불린: Boolean (True/False)
+
+class MainActivity : AppCompatActivity()
+	" : " => 상속을 의미 
+
+var notNull : Int  = null 
+=> kotlin은 기본적으로 변수에 null 값을 넣지 못한다 
+
+var okNull : int? = null
+=> okNull이라는 변수는 null값을 허용한다 
+
+변수에 null값이 아니라고 알려줄 때 사용하는 키워드 => !! (사용하지 않아도 문제는 없다)
+	var test!! : int =10
+
+----------------------------------------------------------------------------------------------------
+Layout = > 모든 UI(위젯)를 나타내는 장소 
+
+LinearLayout(전체 안드로이드 90%) => 위젯을 수평(기본설정) / 수직배치만 할 수 있음 
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+처음 만들면 실행되는 코드임 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+LinearLayout으로 사용하려면 위에를 LinearLayout으로 바꾸고 사용 
+orientation은 수직으로 할지 수평으로 할지 설정하고
+위에 tools:context=".MainActivity"은 안지워도 되지만 GridLayout이 사용하는 것 
+
+---------------------------------------------------------------------------------------------------
+왼쪽 상단이 0,0 세로가 y축 가로가 x축 
+
+android:gravity="right|bottom"
+
+핸드폰을 기준으로 
+
+       top
+
+left	right
+
+
+      buttom
+
+
+gravity => 레이아웃 안의 위젯을 어디에 배치할 건지 결정(위젯전체를 통으로 움직임
+이건 layout영역에 적어줌 
+
+layout_gravity => 각각의 위치를 따로따로 잡을 수 있음 layout에 속한 자식(위젯)의 위치를 바꿈
+이건 각각의 위젯에 적어줌 
+
+**************************************************************************************************
+  <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch1"
+        android:text="Switch"/>
+
+Switch는 옆으로 밀고 닫는 버튼 처럼 생김 
+*************************************************************************************************
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn1"
+        android:text="오른쪽"
+        android:layout_gravity="right"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn2"
+        android:text="중앙"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn3"
+        android:text="왼쪽"
+        android:layout_gravity="left"/>
+
+*************************************************************************************************
+각각의 버튼을 따로 따로 배치 
+총 4개의 레이아웃이 필요 전체 1개 부분 3개
+전체 1개는 다감싸야 하므로 전부 match_parent로 값을 줌
+그리고 3개의 레이아웃이 수직이므로 속성을 vertical로 줌
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+첫번째 레이아웃
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" //레이아웃의 속성으로 gravity를 단독으로 주면 어차피 안에
+버튼들이 레이아웃에 속해있으므로 중앙으로 옴 
+        android:orientation="vertical"
+        android:layout_weight="1"> // 화면의 비율을 나타내는 것 전체 중 1을 차지 다른
+레이아웃에도 똑같이 주면 똑같은 비율을 차지함 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버튼1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버튼2"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#00FF00"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버튼3"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버튼4"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#FFF000"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버튼5"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버튼6"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+*************************************************************************************************
+레이아웃들 배치 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF00FF"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FF0000">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FF00"
+        android:layout_weight="1">
+    </LinearLayout>
+
+</LinearLayout>
+
+**************************************************************************************************
+만약에 Error running 'app': Timed out after~ 로 시작하는 에러 발생시 adb라는 폴더에서 
+서버로 잡아서 에뮬레이터를 실행하는데 여기서 에러가 발생하면 뜸
+
+해결방법
+
+adb 파일을 찾는다 
+프로그램 tools에서 SDK manager 에서 sdk location을 복사 후 문서 창에 붙여넣기 한후
+platform tools로 들어가서 문서 주소창을 클릭 하면 
+C:\Users\PC2305\AppData\Local\Android\Sdk\platform-tools 여기에 adb파일이 있음
+
+cmd창에 path C:\Users\PC2305\AppData\Local\Android\Sdk\platform-tools
+엔터치고 
+adb 누르면 adb가 나옴 
+adb kill-server 엔터누르고
+adb forward --remove-all 엔터
+adb start-server 엔터
+그 다음에 실행하면 됨 
+
+29가 이미 running 된다는 메시지 나오면 프로그램 위에 pixel 2 api29  적힌 곳을 눌러서
+device Manager 누르고 29삭제 후 다시 29잡아주면 됨 
+
+------------------------------------------------------------------------------------------------
+TableLayout => 표형식으로 위젯을 배치할 때 (행, 열)
+
+span => column을 하나로 결합
+tablerow = 테이블의 행
+레이아웃끼리는 호환가능 즉 Linearlayout에 tablelayout도 사용가능
+
+************************************************************************************************
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow>
+        <Button
+            android:layout_width="100dp"
+            android:text="1"/>//어차피 내용물의 크기에 따라 버튼의 크기는
+            달라지므로 height값을 사용안해도됨
+        <Button
+            android:layout_width="100dp"
+            android:layout_span="2"
+            android:text="2"/>
+        <Button
+            android:layout_width="100dp"
+            android:text="3"/>
+    </TableRow>
+만약에 위에 테이블에서 밑에 테이블로우를 만들지 않으면 테이블 길이가 몇개인지 모르므로
+span값을 주게 되면 1, 3만 나옴 그리고 테이블 하나를 더 만들면 테이블 밑에 길이를 바탕으로
+위에 테이블길이가 설정되게 됨 
+    <TableRow>
+        <Button
+            android:layout_width="100dp"
+            android:layout_column="1" //테이블로우인덱스가 0부터 시작하는데 1부터 즉 
+한칸 띄어서 저장하겠다라는 뜻
+            android:text="4"/>
+        <Button
+            android:layout_width="100dp"
+            android:text="5"/>
+        <Button
+            android:layout_width="100dp"
+            android:text="6"/>
+    </TableRow>
+
+</TableLayout>
+
+------------------------------------------------------------------------------------------------
+editText => 사용자가 글씨를 입력하는 곳
+TextView =>글씨를 보여주는 곳
