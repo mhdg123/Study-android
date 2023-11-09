@@ -1,0 +1,336 @@
+   <AnalogClock
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <DigitalClock
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+--------------------------------------------------------------------------------------------------
+크노로미터 ( 스탑워치 비슷한거)
+00:00이렇게 표시됨 
+
+안드로이드가 기본적으로 제공해줌
+
+00:00(stop(),  start(),  reset() ) 
+
+"시간측정 00:00"  = 문자열로 바꿔줘야함 문자열에 시간이니까 문자열+시간 =>숫자인 시간을 문자열로 형변환
+
+문자열로 형변환 할때는 format키워드사용 //그래서 따로 text를 사용할 필요없음 format에서 내용지정
+
+android:format="시간 측정 : %s"  //%s는 문자열 %s가 시계표시가 될거임 
+
+--------------------------------------------------------------------------------------------------
+타임 피커(시간), 데이터 피커(날짜), 캘린더 뷰(날짜)가 안드로이드에 존재
+
+android:timePickerMode="spinner" // clock과 spinner 
+
+android:datePickerMode="spinner" // 둘 다 spinner가 따로 추가된 기능 
+
+***************************************************************************************************
+    <Chronometer
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:format="시간 측정 : %s"/>
+
+    <TimePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"/>
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"/>
+
+***************************************************************************************************
+radio버튼은 radio그룹이 가지고 있음 
+
+위젯과 위젯을 같이 겹치게 사용하는 레이아웃 =FrameLayout
+
+<FrameLayout> 위젯과 위젯들이 서로 같은 위치에 겹쳐서 나타낼 때 
+
+************************************************************************************************
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Chronometer
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:format="완료된시간: %s"
+            android:id="@+id/chronometer1"
+            android:gravity="center"
+            android:textSize="25dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnStart"
+            android:text="시       작"/>
+    </LinearLayout>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioCal"
+            android:text="날짜 선택(캘린터 뷰)"
+            android:textSize="20dp"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioTime"
+            android:text="시간 선택"
+            android:textSize="20dp"/>
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp" //누가 들어올지 모름 
+그래서 사이즈는 0으로 주고 달력이 들어오면 달력크기 시간이 들어오면 시간크기로 자동
+        android:layout_weight="1"> //비율을 1로주면 달력 시계 들어감 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <CalendarView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/calView"
+                android:showWeekNumber="false"/>//몇주차인지 알려줌 false는 안나타나게 함(더 깔끔)
+
+            <TimePicker
+                android:id="@+id/timePic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:timePickerMode="spinner" /> 
+        </FrameLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="완  료"
+            android:id="@+id/btnEnd"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvYear"
+            android:text="0000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="년"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMonth"
+            android:text="00"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDay"
+            android:text="00"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvHour"
+            android:text="00"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMinute"
+            android:text="00"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분 예약완료"/>
+    </LinearLayout>
+
+</LinearLayout>
+//밑에 들어가는 텍스트를 하나하나 다 따로 잡아줘야 함 
+
+--------------------------------------------------------------------------------------------------
+arrayOf() // 괄호 안에는 배열의 데이터들이선언되어 있다 
+
+배열화되어 있는걸 하나로 묶음 =ArrayAdapter
+
+*************************************************************************************************
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/autoCompleteTv1"
+        android:hint="자동 완성 텍스트뷰"
+        android:completionThreshold="2" //단어 2글자가 맞는 데이터는 다 보여줘라는 뜻 
+        android:completionHint="선택하세요"/>
+
+    <MultiAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/multiautoCompleteTv1"
+        android:hint="멀티자동 완성 텍스트뷰"
+        android:completionThreshold="2"
+        android:completionHint="선택하세요"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="20" /> // 좌우로 크기를 움직이는 것
+
+</LinearLayout>
+
+--------------------------------------------------------------------------------------------------
+위젯/레이아웃이 화면에서 넘칠 때 => 스크롤 뷰를 이용하여 사용한다
+			         (좌, 우 / 위, 아래 ) 가능 
+	
+	*주의할 점 
+	스크롤 뷰에는 단 하나의 위젯만 넣어서 사용
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="버튼 1"/>
+
+    </LinearLayout>
+
+</ScrollView>
+
+---------------------------------------------------------------------------------------------------
+슬라이딩 드로어
+
+<슬라이딩 드로어 handle = "핸들명" content = "콘텐츠명" >
+	<버튼 id = "핸들명"/>   // 손잡이 역할
+	<리니어 레이아웃 id = "콘텐츠명">
+		//구문
+	</리니어 레이아웃>
+</슬라이딩 드로어>
+
+--------------------------------------------------------------------------------------------------
+화면 --> 화면 --> 화면
+	화면을 전환하는 방법 3가지
+
+1. 뷰플리퍼(가장 단순한 방법) //눈속임으로 화면이 바뀌는 것처럼 보여줌
+2. 인텐트(정확한 화면 전환)
+3. 프레그먼트 => 원랜 태블릿에서 사용함(화면이 크다보니) 
+현재나오는 모든 앱은 프레그먼트를 이용함 
+
+화면이 전환
+Activity에서 ACtivity로 변경 되는 것을 말한다 
+Activity하나당 xml이 결합되야 함 
+
+화면 중 한개는 실행을 하는  MainActivity이다
+뷰플리퍼는 Activity가 한개
+인텐트는 화면당 Activity가 한개
+프레그먼트는 Activity와는 독립적으로 사용한다 (다른 것들은 Activity의 영향을 받음)
+하지만 프레그먼트도 Activity는 있어야 한다
