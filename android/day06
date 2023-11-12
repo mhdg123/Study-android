@@ -1,0 +1,97 @@
+생성	대화상자 => 화면에 메시지 보여주고 확인, 취소와 같은 선택을 하는 것 
+↓
+	AlertDialog.Builder 클래스로 대화 상자 생성 
+설정	setTitle() => 제목설정
+	setMessage() =>내용입력
+	setIcon() =>아이콘설정(대부분사용안함)
+	setPositiveButton("문자열", 람다식) => ok버튼
+	setNegativeButton => 취소버튼
+↓
+출력	show()
+-------------------------------------------------------------------------------------------------------------
+위젯은 Listener로 항상 이용함 하지만 이용하려면 변수먼저 잡아줘야함 
+var => 일반변수 선언할 때
+val => 상수선언할 때
+--------------------------------------------------------------------------------------------------------------
+layout 밑에 mipmap은 icon을 집어넣는 곳 
+이곳에 안드로이드아이콘이 들어가 있음 
+같은 아이콘이 많은 것은 해상도에 따라 달리지 때문에 폴더이름만 선택하면 알아서 맞는 해상도를 적용
+----------------------------------------------------------------------------------------------------------------
+대화상자 만드는 코드 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnClick"
+        android:text="Click"/>
+
+
+</LinearLayout>
+------------------------------------------------------------------------------------------------------------------
+package com.korea.android1104
+
+import android.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var button1 = findViewById<Button>(R.id.btnClick)
+
+        button1.setOnClickListener {
+            var dlg = AlertDialog.Builder(this@MainActivity)
+            // this는 현재화면을 의미하고 클릭 시 대화상자를 만드는 코드
+            //대화 상자 생성 => 내부클래스 안에서 생성되기 때문에 this@액티비티이름으로 사용함
+            dlg.setTitle("제목을 나타내는 곳")
+            dlg.setMessage("내용을 나타내는 곳")
+            dlg.setIcon(R.mipmap.ic_launcher)
+            dlg.setPositiveButton("확인",null)
+            //null부분이 어떠한 동작을 일으키는 행위가 오는 곳인데 null은 아무런 동작이 일어나지않는다
+            //문자열 뒤에 람다식 나옴
+            dlg.setPositiveButton("확인"){dialog, which ->
+                Toast.makeText(this@MainActivity,"허용하셨습니다", Toast.LENGTH_SHORT).show()
+            }
+            dlg.show()
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------
+대화상자안에서는 사용자가 입력을 못하는데 입력을 하게 하려면 데이터상자안에 레이아웃을
+하나 더 만들어주면됨 
+res -> layout -> 오른쪽버튼(new) -> Layout Resource file 에서 root를 Linearlayout으로 지정해줌
+----------------------------------------------------------------------------------------------------------------
+timer => 안건드려도 자동으로 실행됨 문자오면 자동으로 알려주는 것 /실체가 존재하고 내가 실행
+하지 않아도 자동으로 알려주기 위해 매 시간 작동하고 있는 걸 백그라운드 서비스라고 함 시간도 마찬가지
+---------------------------------------------------------------------------------------------------------------
+xml에서 palette 밑에 Component Tree가 있는데 여기서 텍스트를 지워도 되고 레이아웃을 바꿀 수도 있음
+
+텍스트 0과 텍스트00사이에 간격이 맞지 않는데 마우스오른쪽버튼 눌러서 show baseline선택 후 간격
+맞춰 줄 텍스트를 선택하면 저절로 맞춰짐
+
+기호 및 아이콘은 res에서 오른쪽버튼 누르고 vector를 누르고 clip art눌러서 원하는 아이콘 선택 
+그럼 drawble 폴더에 들어가서 사용가능함
+
+안드로이드에서 제공하는 백터 이미지를 표시할 FloatingActionButton을 사용한다.
+버튼에 선택한 이미지를 입히는 것 
+만들어놓고 checkable에 true값이 적용되어있는 지 확인 적용이 안되어있으면 버튼을 아무리 눌러도
+실행안됨
+
+timer를 이용하여 UI를 변경하는 코드 (1000은 1초)
+timer(period =1000) {
+//작업코드 
+	runInUiThread {
+	//UI 변경조작 코드
+	}
+}
