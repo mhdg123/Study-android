@@ -1,0 +1,58 @@
+파일처리 => SD카드
+내장 메모리파일의 저장 장소 => data/data/패키지이름/files 폴더
+읽기 전용 파일 
+=> res/raw 폴더 => 미디어(음악, 영상, 그림 등등)으로 사용하기 때문에 미디어위주로 집어넣음 
+
+하단에 device Explorer에서 data에서 위에 써놓은 것처럼 파일이 있음 
+device Explorer에서 sdcard는 핸드폰에서 사용할 수 있는 메모리를 저장
+
+안드로이드 Context class =>openFileInput() =>FileInputStream()반환 
+파일을 쓰기 위해서 openFileOutput() => FileOutputStream을 반환 
+자바의 JDK에서 제공하는 java.io.FileInputStream class 또는 java.io,FileOutputStream class의 
+read(), write()
+
+openFileOutput(), openFileInput()으로 파일을 열기 
+	↓
+read(), write()로 파일 읽기/쓰기
+	↓
+close() 파일로 닫기 
+
+한글을 저장하기 위해서는 => toByteArray()를 이용하여 문자열을 byte[]형으로 변경 
+이유는 한글의 깨짐방지하기 위해서 
+1byte인 영문을 기준으로 만들었기 때문에 
+
+모든 프로그램에서 파일입출력에 관한 내용의 소스가 있다면 반드시 그 소스안에서는 예외처리 
+구문을 작성 
+-------------------------------------------------------------------------------------------------------------
+안드로이드에는 4가지 중요한 기능(컴포넌트)
+1. Activity 
+ 	=>화면을 구성하는 가장 기본적인 컴포넌트
+2. Service
+	=>눈에 보이는 화면(Activity)과 상관업시 백그라운드에서 작동
+3. BroadCast Receiver
+	=>여러 응용 프로그램이나 장치에 메시지 전달을 위해 사용
+4. Content Provider
+	=> 응용 프로그램 사이에 데이터를 공유하는 기능 
+
+화면과 화면이 전환될때는 => Intent
+Intent를 사용할 시에는 반드시 안드로이드에 등록을 해주어야 한다
+AndroidManifest.xml에서 등록을 해야 한다 
+
+   <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SecondActivity"/>
+
+//메인화면 밑에 전환할 화면을 넣어줘야함
+
+Intent => 화면을 전환 기능을 가지고 있고 4대 기능(컴포넌트)들이 서로 데이터를 주고 받기위한
+메시지 객체
+
+명시적 인텐트, 암시적 인텐트 
+
